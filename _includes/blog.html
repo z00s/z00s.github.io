@@ -3,36 +3,12 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12 text-center">
-                <h2>博客搭建中... LOL</h2>
+                <h2>BLOG</h2>
                 <hr class="star-primary">
             </div>
         </div>
-        <!--<div class="row">-->
-            <!--{% for post in site.posts %}-->
-            <!--<div class="col-sm-4 portfolio-item">-->
-                <!--<a href="#portfolioModal-{{ post.modal-id }}" class="portfolio-link" data-toggle="modal">-->
-                    <!--<div class="caption">-->
-                        <!--<div class="caption-content">-->
-                            <!--<i class="fa fa-search-plus fa-3x"></i>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                    <!--<img src="img/portfolio/{{ post.img }}" class="img-responsive" alt="{{ post.alt }}">-->
-                <!--</a>-->
-            <!--</div>-->
-            <!--{% endfor %}-->
-        <!--</div>-->
         <div class="row">
             {% for post in site.posts %}
-            <!--<div class="col-sm-offset-2 col-sm-8">
-                <ul>
-                    <li>
-                        <p>
-                            gai zheli
-                            <a href="{{ post.url | prepend: site.baseurl }}">{{post.title}}</a>
-                        </p>
-                    </li>
-                </ul>
-            </div>-->
             <article class="post" itemscope itemtype="http://schema.org/BlogPosting" role="article">
                 <div class="article-item">
                     <div class="post-header">

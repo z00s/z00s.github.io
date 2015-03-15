@@ -25,9 +25,17 @@ a.active {
     text-decoration:none;
 }
 a:hover{
-    color：#18bc9c；
+    color: #18bc9c;
 }
 
 article.post {
     padding: 5px;
+}
+/*blog template*/
+article.show-off-page {
+    padding-top: 67px;
+}
+
+.post-time {
+    padding: 2px;
 }
