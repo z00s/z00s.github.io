@@ -1,0 +1,33 @@
+/*!
+ * Start Bootstrap - Freelancer Bootstrap Theme (http://startbootstrap.com)
+ * Code licensed under the Apache License v2.0.
+ * For details, see http://www.apache.org/licenses/LICENSE-2.0.
+ */
+
+section.post-excerpt {
+    padding: 20px 0;
+}
+
+.post-header {
+    color: #fff;
+    background: #FFFFFFFF;
+}
+
+h2.post-title{
+    font-size: 2em;
+}
+
+a,
+a:hover,
+a:focus,
+a:active,
+a.active {
+    text-decoration:none;
+}
+a:hover{
+    color：#18bc9c；
+}
+
+article.post {
+    padding: 5px;
+}
