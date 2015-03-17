@@ -39,3 +39,9 @@ article.show-off-page {
 .post-time {
     padding: 2px;
 }
+
+.img-responsive {
+    margin: 10px auto 20px;
+    height: 200px;
+    width: auto;
+}
