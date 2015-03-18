@@ -18,7 +18,6 @@ layout: default
     </div>
 </article>
 {% endfor %}
-
 <ul class="pagination">
     <!-- pre -->
     {% if paginator.previous_page %}
@@ -26,13 +25,13 @@ layout: default
     {% endif %}
 
     {% for count in (1..paginator.total_pages) %}
-        {% if count-page< 3 && count-page > -3 %}
+        <!--{% if count-{{paginator.page}} < 3 && count-{{paginator.page}} > -3 %}-->
             {% if count == 1 %}
             <li class="active"><a href="/">1</a></li>
             {% else %}
             <li class="active"><a href="/page{{ count }}">{{count}}</a></li>
             {% endif %}
-        {% endif %}
+        <!--{% endif %}-->
     {% endfor %}
     <!-- next -->
     {% if paginator.next_page %}
