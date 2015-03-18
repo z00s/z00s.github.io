@@ -16,8 +16,7 @@ AndroidStudio 兼容Eclipse项目，不过在导入之前需要做一些操作�
 
 Eclipse 和 Android Studio的区别:
 
-*　二者工程结构不一样，且E不兼容AS的工程
-
+* 二者工程结构不一样，且E不兼容AS的工程
 ** 我的感觉是AS的目录结构更清爽，与主流框架的结构相似，如maven，Rails
 ** 另外我也更加喜欢JetBrains公司的IDE，
 
