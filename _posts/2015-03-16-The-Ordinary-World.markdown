@@ -15,6 +15,9 @@ I think it’s a good TV product. But when I do some research about this book on
     
 To describe that time, I quote a passage from A Tale of two Cities, I can’t recite it, here it is:
     
-    It was the best of times, it was the worst of times, it was the age of wisdom, it was the age of foolishness, it was the epoch of belief, it was the epoch of incredulity, it was the season of Light, it was the season of Darkness, it was the spring of hope, it was the winter of despair, we had everything before us, we had nothing before us, we were all going direct to Heaven, we were all going direct the other way.
-    那是最美好的时代,那是最糟糕的时代;那是智慧的年头,那是愚昧的年头;那是信仰的时期,那是怀疑的时期;那是光明的季节,那是黑暗的季节;那是希望的春天,那是失望的冬天;我们全都在直奔天堂,我们全都在直奔相反的方向.
 
+
+>It was the best of times, it was the worst of times, it was the age of wisdom, it was the age of foolishness, it was the epoch of belief, it was the epoch of incredulity, it was the season of Light, it was the season of Darkness, it was the spring of hope, it was the winter of despair, we had everything before us, we had nothing before us, we were all going direct to Heaven, we were all going direct the other way.
+
+------
+>那是最美好的时代,那是最糟糕的时代;那是智慧的年头,那是愚昧的年头;那是信仰的时期,那是怀疑的时期;那是光明的季节,那是黑暗的季节;那是希望的春天,那是失望的冬天;我们全都在直奔天堂,我们全都在直奔相反的方向.
