@@ -106,7 +106,7 @@ public class LogbackDemo {
 
 使用Sample
 
-``` xml
+``` html
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE logback>
 <!-- 根节点 -->
