@@ -46,16 +46,16 @@ pom.xml
 
 在src目录下建立logback.xml
 
-- logback首先会尝试查找logback.groovy文件
-- 当没有找到时，继续查找logback-test.xml文件 
-- 当没有找到时，继续查找logback.xml文件
-- 都找不到，将默认输出控制台
+	- logback首先会尝试查找logback.groovy文件
+	- 当没有找到时，继续查找logback-test.xml文件 
+	- 当没有找到时，继续查找logback.xml文件
+	- 都找不到，将默认输出控制台
 
 ----
 
 这里新建一个最简单的例子，默认情况下控制台会输出Debug等级以下的log
 
-```java
+``` java
 package logbackDemo;
 
 import org.slf4j.LoggerFactory;
