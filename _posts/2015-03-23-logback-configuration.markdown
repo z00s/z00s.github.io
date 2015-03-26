@@ -4,43 +4,44 @@ title:  "logback configuration"
 date:   2015-03-23 14:34:25
 categories: j2ee logback 
 tags: logback
-image: /assets/article_images/2014-08-29-welcome-to-jekyll/desktop.jpg
 ---
 
 # logback简介
 
-Logback——一个可靠、通用、快速、灵活的Java日志框架
+Logback是一个由log4j创始人设计的，可靠、通用、快速、灵活的Java日志框架
 
 ------
 
 所需jar包
 	
-	- slf4j-api-1.6.1.jar
-	- logback-access-0.9.29.jar
-	- logback-classic-0.9.29.jar
-	- logback-core-0.9.29.jar
+	- logback-core-0.9.29.jar 		基础，核心
+	- logback-classic-0.9.29.jar 	是core的扩展，与其他框架集成
+	- slf4j-api-1.6.1.jar 			classic依赖于slf4j.jar
+	- logback-access-0.9.29.jar 	与servlet容器集成
 
 ----
 
 pom.xml
+
+```html
+<dependency>
+	<groupId>ch.qos.logback</groupId>
+	<artifactId>logback-classic</artifactId>
+	<version>1.1.2</version>
+</dependency>
 	
-	<dependency>
-		<groupId>ch.qos.logback</groupId>
-		<artifactId>logback-classic</artifactId>
-		<version>1.1.2</version>
-	</dependency>
-		
-	<dependency>
-		<groupId>ch.qos.logback</groupId>
-		<artifactId>logback-access</artifactId>
-		<version>1.0.3</version>
-	</dependency>
-		
-	<dependency>
-		<groupId>org.slf4j</groupId>
-		<artifactId>jul-to-slf4j</artifactId>
-		<version>1.7.6</version>
-	</dependency>
+<dependency>
+	<groupId>ch.qos.logback</groupId>
+	<artifactId>logback-access</artifactId>
+	<version>1.0.3</version>
+</dependency>
+	
+<dependency>
+	<groupId>org.slf4j</groupId>
+	<artifactId>jul-to-slf4j</artifactId>
+	<version>1.7.6</version>
+</dependency>
+```
 
 ----
 
@@ -79,20 +80,22 @@ public class LogbackDemo {
 }
 ```
 
+----------------> 延伸级别继承
+
 ------------
 
-#　配置
+#　配置logback.xml
 
 根节点`<configuration>`， 它有三个子节点
 
 - appender
-- loger
+- logger
 - root
 
 ------
-`loger` 用来设置某个包的的日志打印级别
+`logger` 用来设置某个包的的日志打印级别
 
-- name 				指定该`loger`作用的一个包或者是类
+- name 				指定该`logger`作用的一个包或者是类
 - level				TRACE, DEBUG, INFO, WARN, ERROR, ALL, OFF
 - addivity 			是否向上级传递打印信息，默认为`true`
 
@@ -103,8 +106,17 @@ public class LogbackDemo {
 
 ----
 `appender` 主要负责写日志，有两个必要的属性`name` & `class`
+`appender` 有很多种
+
+- ConsoleAppender 		控制台输出
+- FileAppender			文件输出,可以设置在文件尾继续写还是覆盖文件
+- RollingFileAppender	滚动文件输出，先记录到指定文件，当符合某个条件时保存到其他文件，如每天生产一个文件，只保存最近一个月的文件
+- SMTPAppender			发送日志邮件
+- ... 还有很多，具体的可以在附件及链接地址中查找
 
 使用Sample
+
+控制台：
 
 ``` html
 <?xml version="1.0" encoding="UTF-8"?>
@@ -136,16 +148,54 @@ public class LogbackDemo {
 </configuration>
 ```
 
+文件:
+
+```html
+<!-- file -->
+<appender name="FILE" class="ch.qos.logback.core.FileAppender">
+<file>E:/testFile.log</file>
+<append>false</append>
+<encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+	<layout class="logback.MySampleLayout" >
+		<prefix>这里显示自定义前缀</prefix>
+	</layout>
+</encoder>
+</appender>
+```
+
+邮件:pom.xml中需要引入两个依赖jar包
+
+```html
+<!-- email -->
+<dependency>
+	<groupId>javax.mail</groupId>
+	<artifactId>mail</artifactId>
+	<version>1.4.7</version>
+</dependency>
+
+<dependency>
+	<groupId>javax.activation</groupId>
+	<artifactId>activation</artifactId>
+	<version>1.1.1</version>
+</dependency>
+```
+
+``` html
+<!-- email -->
+<appender name="EMAIL" class="ch.qos.logback.classic.net.SMTPAppender">
+	<smtpHost>发送邮件邮箱服务器</smtpHost>
+	<username>用户名</username>
+	<password>密码</password>
+	<to>目的邮箱</to>
+	<from>发送邮箱</from>
+	<subject>标题</subject>
+	<layout class="ch.qos.logback.classic.PatternLayout">
+  		<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+	</layout>
+</appender>
+```
 
 ----
-appender 有很多种
-
-- ConsoleAppender 		控制台输出
-- FileAppender			文件输出,可以设置在文件尾继续写还是覆盖文件
-- RollingFileAppender	滚动文件输出，先记录到指定文件，当符合某个条件时保存到其他文件，如每天生产一个文件，只保存最近一个月的文件
-- SMTPAppender			发送日志邮件
-- ... 还有很多，具体的可以在附件及链接地址中查找
-
 
 [logback mannual]
 
