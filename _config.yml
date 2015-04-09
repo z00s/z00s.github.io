@@ -44,7 +44,17 @@ address:
 credits: 'Freelancer is a free to use, open source Bootstrap theme created by <a href="http://startbootstrap.com">Start Bootstrap</a>.'
 
 # Build settings
-markdown: kramdown
-kramdown:
-    input: GFM
-permalink: pretty
+# markdown: kramdown
+# kramdown:
+#     input: GFM
+# permalink: pretty
+
+highlighter: pygments
+markdown: redcarpet
+redcarpet:
+  extension:
+    - fenced_code_blocks
+    - no_intra_emphasis
+    - strikethrough
+    - autolink
+    - tables
