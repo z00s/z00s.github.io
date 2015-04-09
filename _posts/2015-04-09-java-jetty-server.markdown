@@ -1,7 +1,7 @@
 ---
 layout: blog
 title:  "Java Jetty Server"
-date:   2015-03-12 14:34:25
+date:   2015-04-09 14:34:25
 categories: server jetty
 tags: featured
 ---
