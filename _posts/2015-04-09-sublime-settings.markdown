@@ -1,7 +1,7 @@
 ---
 layout: blog
 title:  "sublime 设置一览"
-date:   2015-03-12 14:34:25
+date:   2015-04-09 10:29:00
 categories: tool sublime
 tags: tool
 ---
