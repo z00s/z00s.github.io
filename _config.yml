@@ -49,8 +49,13 @@ credits: 'Freelancer is a free to use, open source Bootstrap theme created by <a
 #     input: GFM
 # permalink: pretty
 
-highlighter: pygments
-pygments: true
-markdown: redcarpet
+# highlighter: pygments
+# pygments: true
+# markdown: redcarpet
+# redcarpet:
+#   extensions: ["no_intra_emphasis", "fenced_code_blocks", "autolink", "tables", "with_toc_data"]
+markdown:      redcarpet
+markdown_ext:  markdown,mkd,mkdn,md
+
 redcarpet:
-  extensions: ["no_intra_emphasis", "fenced_code_blocks", "autolink", "tables", "with_toc_data"]
+  extensions: ["no_intra_emphasis", "fenced_code_blocks", "autolink", "tables", "strikethrough", "superscript", "with_toc_data"]
