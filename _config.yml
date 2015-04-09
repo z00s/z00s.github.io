@@ -53,9 +53,4 @@ highlighter: pygments
 pygments: true
 markdown: redcarpet
 redcarpet:
-  extension:
-    - fenced_code_blocks
-    - no_intra_emphasis
-    - strikethrough
-    - autolink
-    - tables
+  extensions: ["no_intra_emphasis", "fenced_code_blocks", "autolink", "tables", "with_toc_data"]
