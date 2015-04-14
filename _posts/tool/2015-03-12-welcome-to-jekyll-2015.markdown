@@ -21,6 +21,6 @@ print_hi('Tom')
 
 - 测试一下图片显示
 
-![GOT](http://img0.ph.126.net/AJ7EC5-zVWUkUNtfnJnBsQ==/3362500071887787816.jpg)
- 今天是第五季开播的日子
+![GOT](http://ww1.sinaimg.cn/large/897b1cc3jw8en513qzfl5j20u00u0wge.jpg)
+ 此为新浪微博盗图
 

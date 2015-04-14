@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  [Android 前端] Shape Drawable 学习
+title:  Android前端ShapeDrawable学习
 categories: 资源
 keywords: android,2015
 ---
