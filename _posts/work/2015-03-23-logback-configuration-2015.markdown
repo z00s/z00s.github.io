@@ -38,16 +38,12 @@ pom.xml
 </dependency>
 ```
 
-----
-
 在src目录下建立logback.xml
 
 	- logback首先会尝试查找logback.groovy文件
 	- 当没有找到时，继续查找logback-test.xml文件 
 	- 当没有找到时，继续查找logback.xml文件
 	- 都找不到，将默认输出控制台
-
-----
 
 这里新建一个最简单的例子，默认情况下控制台会输出Debug等级以下的log
 
@@ -77,9 +73,8 @@ public class LogbackDemo {
 
 ----------------> 延伸级别继承
 
-------------
 
-#　配置logback.xml
+##　配置logback.xml
 
 根节点`<configuration>`， 它有三个子节点
 
@@ -87,19 +82,16 @@ public class LogbackDemo {
 - logger
 - root
 
-------
 `logger` 用来设置某个包的的日志打印级别
 
 - name 				指定该`logger`作用的一个包或者是类
 - level				TRACE, DEBUG, INFO, WARN, ERROR, ALL, OFF
 - addivity 			是否向上级传递打印信息，默认为`true`
 
-----
 `root` 只有一个`level`属性的`loger`，它可以有零个或多个`appener-ref`元素， 默认`level`为`DEBUG`
 
 - appener-ref		`ref`属性设置对应`appener`的`name`，结合定义`appener`的打印级别
 
-----
 `appender` 主要负责写日志，有两个必要的属性`name` & `class`
 `appender` 有很多种
 
@@ -190,8 +182,4 @@ public class LogbackDemo {
 </appender>
 ```
 
-----
-
-[logback mannual]
-
-[logback mannual]: http://logback.qos.ch/manual/
+传送门 [logback mannual](http://logback.qos.ch/manual/)
