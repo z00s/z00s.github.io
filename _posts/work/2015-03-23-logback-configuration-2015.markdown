@@ -5,11 +5,9 @@ categories: 工作
 keywords: logback,2015
 ---
 
-# logback简介
+## logback简介
 
 Logback是一个由log4j创始人设计的，可靠、通用、快速、灵活的Java日志框架
-
-------
 
 所需jar包
 	
@@ -17,8 +15,6 @@ Logback是一个由log4j创始人设计的，可靠、通用、快速、灵活�
 	- logback-classic-0.9.29.jar 	是core的扩展，与其他框架集成
 	- slf4j-api-1.6.1.jar 			classic依赖于slf4j.jar
 	- logback-access-0.9.29.jar 	与servlet容器集成
-
-----
 
 pom.xml
 
