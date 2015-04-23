@@ -5,7 +5,9 @@ categories: 工具
 keywords: jekyll,2015
 ---
 
-<!--分页-->
+liquid语言转义高亮bug
+
+    <!--分页-->
     <ul class="pagination">
     <!--首页-->
     {% if paginator.page == 1 %}
