@@ -11,7 +11,7 @@ Jetty 是一个开源的servlet容器，可以为java网络应用提供一个便
 
 由于Jetty的易用，易嵌，可扩展，我们常将之用于我们的unit test当中。这里仅就unit test展开讨论。
 
-首先，我们用maven引入jar包，版本可以选择你希望的版本，这里我们只是在test的时候用到它
+首先，我们用maven引入jar包，版本可以选择你希望的版本(你可以在[Jetty官网](http://www.eclipse.org/jetty/documentation/)上找到相关版本号)。
 
 ```xml
 <properties>
@@ -21,14 +21,29 @@ Jetty 是一个开源的servlet容器，可以为java网络应用提供一个便
 
 ```xml
 <dependency>
-    <groupId>org.eclipse.jetty.tests</groupId>
-    <artifactId>test-loginservice</artifactId>
-    <version>9.1.0.M0</version>
-    <scope>${jettyVersion}</scope>
+    <groupId>org.eclipse.jetty</groupId>
+    <artifactId>jetty-server</artifactId>
+    <version>${jettyVersion}</version>
+    <scope>test</scope>
 </dependency>
 ```
 
-test的时候我们经常读取JSON数据，另外我们可以使用lombok简化代码，额外jar包
+如果我们在maven框架下使用jetty plugin,运行mvn jetty:run等命令, 须配置
+
+```xml
+<build>
+    <plugins>
+      <plugin>
+        <groupId>org.eclipse.jetty</groupId>
+        <artifactId>jetty-maven-plugin</artifactId>
+        <version>${jettyVersion}</version>
+      </plugin>
+    </plugins>
+</build>
+```
+
+jetty针对spring框架有代码嵌入和xml配置两种方式，这里我们只是在test的时候用到它。
+另外，test的时候我们经常读取JSON数据，所以引入jackson的包，我们也可以使用lombok简化代码，额外jar包如下：
 
 ```xml
  <dependency>
@@ -62,7 +77,103 @@ test的时候我们经常读取JSON数据，另外我们可以使用lombok简化
 </dependency>
 ```
 
+我们定义一个简单的请求来方便JSON文件转化为http请求
 
+```java
+package com.mozs.api.mymaven;
+
+import lombok.Getter;
+import lombok.Setter;
+
+/**
+ * 
+ * @author zhangshuai
+ *
+ */
+@Getter
+@Setter
+public class SimpleRequest {
+    /**
+     * method (GET, POST)
+     */
+    private String method;
+
+    /**
+     * uriPath ('/object/create/', '/object/get/', '/object/update/' ...)
+     */
+    private String uriPath;
+
+    /**
+     * request parameter / json
+     */
+    private String jsonRequest;
+
+    /**
+     * request parameter / csv
+     */
+    private String csvContent;
+}
+```
+
+将jetty嵌入到java代码中，我们需要继承AbstractHandler，并重写handle方法，里面我们处理
+
+```java
+package com.mozs.api.mymaven;
+
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.eclipse.jetty.server.Request;
+import org.eclipse.jetty.server.handler.AbstractHandler;
+
+/**
+ * a jetty server handler that can accept request and return response
+ *
+ */
+public class JettyServerHandler extends AbstractHandler {
+    
+    public JettyServerHandler() {
+    }
+
+    @Override
+    public void handle(String target, Request baseRequest, HttpServletRequest request,
+            HttpServletResponse response) throws IOException, ServletException {
+        try {
+            // 处理请求
+            generateRequest(baseRequest);
+            
+            response.setContentType("application/json;charset=utf-8");
+            response.setStatus(200);
+            baseRequest.setHandled(true);
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    private SimpleRequest generateRequest(Request baseRequest) throws Exception{
+
+        SimpleRequest result = new SimpleRequest();
+
+        result.setMethod(baseRequest.getMethod());
+        result.setUriPath(baseRequest.getPathInfo());
+
+        if ("GET".equals(result.getMethod())) {
+            // 解析get后面的参数
+            result.setJsonRequest(TestUtil.convertRequestToJson(baseRequest.getQueryString()));
+        
+        } else if ("POST".equals(result.getMethod())) {
+            // 解析post传入参数
+        }
+        
+        return result;
+    }
+
+}
+```
 
 
 
