@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  Java8 安装
-categories: 工作
+categories: 编程
 keywords: ubuntu, java8, 2015
 ---
 
