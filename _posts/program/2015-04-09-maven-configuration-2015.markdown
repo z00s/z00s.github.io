@@ -7,13 +7,13 @@ keywords: maven，idae，2015
 
 Eclipse用惯了，换成Idea多少需要折腾一下。对于maven工程，Idea自带了maven插件，不用再像E一样安装。不过其他的配置还是类似的。
 
-1. 安装
+#### 安装
 [官网下载Maven](http://maven.apache.org/)
 解压到自己指定的文件夹下， for example `F:\mozs\apache-maven-3.1.1-bin`
 并配置环境变量，不赘述。
 
 
-2. 配置
+#### 配置
 Maven缺省的本地仓库位置： `${user.home}/.m2/repository` 
 默认配置位置： `${user.home}/.m2/settings.xml`
 
@@ -92,8 +92,8 @@ Maven缺省的本地仓库位置： `${user.home}/.m2/repository`
 
 ```
 
-3. 自定义开发库
+#### 自定义开发库
 我们可以使用Nexus自定义内部的开发库，这里是Nexus[安装配置](http://www.cnblogs.com/dycg/archive/2013/05/29/3106968.html)和[自定义仓库](http://www.cnblogs.com/dycg/archive/2013/05/29/3105927.html)教程，感谢原作者整理。
 
-4. Idea 配置和Demo
+#### Idea 配置和Demo
 [See here](http://www.open-open.com/lib/view/open1388650391891.html)
