@@ -5,11 +5,10 @@ categories: 编程
 keywords: CouchBase, 2015
 ---
 
-[CouchBase官网相关文档](http://docs.couchbase.com/)
-主要介绍了各个版本的特性，和针对不同的语言所相对应SDK的使用方法
-
 ## Preface
 本文主要基于CouchBase3.0的文档，概述基本概念与使用中注意的问题，希望能起到引导的作用。具体使用清自行阅读文档。
+[CouchBase官网相关文档](http://docs.couchbase.com/)
+主要介绍了各个版本的特性，和针对不同的语言所相对应SDK的使用方法
 
 ## Introduction
 对CouchBase背景感兴趣的同学可以阅读本段，如果你比较着急，可以自行跳过。
@@ -60,7 +59,7 @@ Mac OS X:
 
 Cluster Manager
 
-> 可以理解为集群的管理中枢，顾名思义，就是负责管理集群的生命周期的。
+> 可以理解为集群的管理中枢，顾名思义，就是负 责管理集群的生命周期的。
 > 主要负责日志、监控、安全，诸如此类，下面是官方给出的主要功能
 > • Cluster management
 > • Node administration
@@ -70,3 +69,26 @@ Cluster Manager
 > • Multi-tenancy
 > • Security for administrative and client access
 > • Client proxy service to redirect requests
+
+Nodes(or Couchbase Server)
+> 一个CouchBase Server的实例，部署在PC，VM或者云端
+>  Node应该是identical的，提供数据访问读写功能，给外部提供一系列的接口
+> 官网上对于Node与Cluster Manager的关系是这样描述的 
+> `Every node within a Couchbase cluster includes the Cluster Manager component`
+
+Cluster
+> 集群简单理解就是一群Node(≥1)
+> 一个cluster中的Nodes对外提供相同的，同时相互间是对等的，没有主从之分
+> 这使得每个Node都可以对整个cluster做管理，分析之类的操作
+> Cluster的Node是可以增加删除的，对等性保证了Cluster内部良好的伸缩性
+> 而用户的数据在每个Node中又是以一个个vBucket存储的
+
+vBuckets
+> vBucket可以简单理解为一个数据集，独自占有Node为它开辟的一块空间
+> vBucket更像是一个个集装箱，它的存在使得Node之间数据备份更有效
+> vBucket对用户是不可见的，但是它却是Couchbase中最重要的一个组件
+> vBucket直译为桶，我们的数据为文件的形式保存在这些桶里面
+> Cluster里每个桶都有自己的编号，分布在不同的Node，Couchbase使用Hash算法计算你的数据存储的位置
+> Cluster维护一个全局的 vBucket 与服务器对应表，而不是简单的指向server，[详解](http://zhang.hu/couchbase/)
+> ![vBuckets示意图](http://docs.couchbase.com/admin/admin/images/vbuckets.png)
+> 盗图于[vBuckets官方文档](http://docs.couchbase.com/admin/admin/Concepts/concept-vBucket.html)
