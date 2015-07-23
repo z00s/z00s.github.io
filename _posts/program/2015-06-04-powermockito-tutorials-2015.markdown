@@ -169,6 +169,7 @@ TargetClass object = Mockito.mock(TargetClass.class); // 生成实例
 
 PowerMockito.doReturn("expected").when(object, "publicStaticMethod", Mockito.anyString());
 PowerMockito.doReturn("expected").when(TargetClass.class, "privateStaticMethod", Mockito.anyString()); 
+PowerMockito.doReturn("expected").when(object.publicStaticMethod(Mockito.anyString()));
 
 // 调用
 // 声明
