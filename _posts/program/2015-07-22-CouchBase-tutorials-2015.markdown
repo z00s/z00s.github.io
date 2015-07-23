@@ -44,9 +44,9 @@ Lunix:
 
 > + Red Hat/CentOS & Ubuntu/Debian
 
-Mac OS X: <img src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=4052546587,939476500&fm=116&gp=0.jpg", alt="交个朋友吧" width= "33" />
+Mac OS X: 
 
-> + 土豪，交个朋友吧 
+> + 土豪，交个朋友吧<img src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=4052546587,939476500&fm=116&gp=0.jpg", alt="交个朋友吧" width= "33"/>
 
 
 ## Management
