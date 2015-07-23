@@ -46,7 +46,7 @@ Lunix:
 
 Mac OS X:
 
-> + 土豪，交个朋友吧 ![交个朋友吧](http://d.hiphotos.baidu.com/zhidao/pic/item/b812c8fcc3cec3fd47af82ccd688d43f869427f1.jpg)
+> + 土豪，交个朋友吧 <img src="http://d.hiphotos.baidu.com/zhidao/pic/item/b812c8fcc3cec3fd47af82ccd688d43f869427f1.jpg", alt="交个朋友吧" width= "40" />
 
 ## Management
 
