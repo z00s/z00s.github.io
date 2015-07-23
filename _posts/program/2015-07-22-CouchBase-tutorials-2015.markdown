@@ -92,3 +92,12 @@ vBuckets
 > Cluster维护一个全局的 vBucket 与服务器对应表，而不是简单的指向server，[详解](http://zhang.hu/couchbase/)
 > ![vBuckets示意图](http://docs.couchbase.com/admin/admin/images/vbuckets.png)
 > 盗图于[vBuckets官方文档](http://docs.couchbase.com/admin/admin/Concepts/concept-vBucket.html)
+
+Rack Awareness
+> 翻译为机架感知，主要负责负载均衡，是企业版收费功能
+> 数据备份的管理和单点失效处理
+
+## Summary
+1. 数据动态分散
+2. 单点失效处理，不会造成数据404
+3. 良好的扩展弹性
