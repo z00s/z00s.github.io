@@ -28,48 +28,61 @@ To begin with, we need a jar of couchbase released by official website, we use m
 with this tool, we create a 'hello' sample here
 
 ```java
-// Spare some details
-public static void main(String args[]){
-    /**
-     * with no other arguments provide, this will logically bind it to local server
-     * Also you can create a cluster with params, like this
-     * Cluster cluster = CouchbaseCluster.create("127.0.0.1"); // same as no args one
-     * you dont need to put all nodes here, the client is able to establish initial contact by itself.
-     */
-    Cluster cluster = CouchbaseCluster.create();
+	// Spare some details
+	public static void main(String args[]){
+        /**
+         * with no other arguments provide, this will logically bind it to local server
+         * Also you can create a cluster with params, like this
+         * Cluster cluster = CouchbaseCluster.create("127.0.0.1"); // same as no args one
+         * you dont need to put all nodes here, the client is able to establish initial contact by itself.
+         */
+        Cluster cluster = CouchbaseCluster.create();
 
-    /**
-     * it will connect default bucket without password
-     */
-    Bucket bucket = cluster.openBucket();
+        /**
+         * it will connect default bucket without password
+         */
+        Bucket bucket = cluster.openBucket();
 
-    try {
-        // prepare data
-        JsonObject user = JsonObject.empty()
-            .put("firstName", "Edwin")
-            .put("lastName", "Zhang")
-            .put("job", "Engineer")
-            .put("age", 20);
+        try {
+            // prepare data
+            JsonObject user = JsonObject.empty()
+                    .put("firstName", "Edwin")
+                    .put("lastName", "Zhang")
+                    .put("job", "Engineer")
+                    .put("age", 20);
 
-	    // create JsonDocument
-        JsonDocument doc = JsonDocument.create("Edwin", user);
-        JsonDocument response = bucket.upsert(doc);
+            // create JsonDocument
+            JsonDocument doc = JsonDocument.create("Edwin", user);
+            JsonDocument response = bucket.upsert(doc);
 
-	 	System.out.println("=================================================");	
-        System.out.println("successfully upsert, response is here:" + response);
-        System.out.println("=================================================");
+            System.out.println("=================================================");
+            System.out.println("successfully upsert, response is here:" + response);
+            System.out.println("=================================================");
 
-        JsonDocument edwin = bucket.get("Edwin");
-        System.out.println("Found it:" + edwin);
-        System.out.println("You want to know his age? " + edwin.content().getInt("age"));
-        System.out.println("=================================================");
+            JsonDocument edwin = bucket.get("Edwin");
+            if (edwin == null) {
+                System.out.println("He's quit, Sorry for that.");
+            } else {
+                System.out.println("Found it:" + edwin);
+                System.out.println("You want to know his age? " + edwin.content().getInt("age"));
+                System.out.println("=================================================");
+                System.out.println("Owh! He's older than that, Lets Change it");
+                edwin.content().put("age", 24);
+                response = bucket.replace(edwin); // replace old data
+                System.out.println("Done! See here:" + response);
+            }
 
-    } catch (Exception e) {
-        // handle the exception here
-        e.printStackTrace();
-    } finally {
-        // close the cluster
-        cluster.disconnect();
+        } catch (Exception e) {
+            // handle the exception here
+            e.printStackTrace();
+        } finally {
+            // close the cluster
+            cluster.disconnect();
+        }
     }
-}
 ```
+Unfortunately, its completely synchronous, our application will be waiting until a response comes back. So we need a non-blocking way.
+
+```java
+
+``` 
