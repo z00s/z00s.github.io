@@ -1,155 +1,103 @@
-How to use
-===
-有了前面的概念，我们来了解一下如何使用couchbase，这里我们列举常用的三种方式，仅供参考，具体视项目而定。
+---
+layout: post
+title:  CouchBase的使用01
+categories: 编程
+keywords: CouchBase, 2015
+---
 
- 1. Web console
- 2. 官方SDK
- 3. Spring Data Couchbase
- 4. Ohters ...
+## Preface
+本文主要基于CouchBase3.0的文档，概述基本概念与使用中注意的问题，希望能起到引导的作用。具体使用清自行阅读文档。
+[CouchBase官网相关文档](http://docs.couchbase.com/)
+主要介绍了各个版本的特性，和针对不同的语言所相对应SDK的使用方法
 
-----------
+## Introduction
+对CouchBase背景感兴趣的同学可以阅读本段，如果你比较着急，可以自行跳过。
 
-### №1. Web Console
-这是Couchbase自带的、最方便、最直观的管理工具。在你安装完成后，它会自动弹出在你的默认浏览器。前文讲到的Couchbase cluster, Nodes, Data Buckets还有Views，这些你都可通过网页进行管理。另外还提供了内存，硬盘的使用情况，支持日志的收集分析，也提供了一些sample的安装，可以很好的帮助你理解couchbase的工作原理。
+> CouchBase = CouchDB + Membase
 
-----------
+CouchDB -> 是一个开源的面向文档的数据库管理系统。
 
-### №2. 官方SDK
-Couchbase官方网站，针对不通的语言，为我们提供了相应的SDK和文档说明。目前支持C、Go、Java、.NET、Node.js、PHP、Python & Ruby ...
-![用哪个呢](http://www.divideyvenceras.es/galeria/memes/pensativo-meme.png)
+> 1. CouchDB是分布式的数据库
+> 2. CouchDB是面向文档的数据库，存储半结构化的数据，比较类似lucene的index结构
+> 3. 支持REST API，可以让用户使用JavaScript来操作CouchDB数据库，也可以用JavaScript编写查询语句
 
-### Java SDK 2.1
+Membase -> 是一个基于key/value的NoSQL开源项目。
 
-SDK目前支持的功能
+> 1. 持久化，自动将在线数据迁移到低延迟的存储介质的技术
+> 2. 多线程低锁争用
+> 3. 动态再平衡现有集群
+> 4. 支持快速失败转移来提供系统的高可用性
 
-> 此处应有一张盗图
+CouchBase作为二者合并而生，自然聚合了二者的优点。所谓优点就应有所比较，而这需要对市面上各类缓存产品有着深入的了解。所以转载网络大牛对于缓存系统的比较心得。
+传送门: [Couchbase介绍，更好的Cache系统](http://zhang.hu/couchbase/)
 
-#### Hello World
-首先，我们需要引用官方的jar包
+## Installation
+[Supported platforms](http://docs.couchbase.com/admin/admin/Install/install-platforms.html)
+Windows: 
 
-```xml
-<dependency>
-    <groupId>com.couchbase.client</groupId>
-    <artifactId>java-client</artifactId>
-    <version>${VERSION}</version> // 目前最新版本是2.1.4
-</dependency>
-```
+> + 官方下载安装包，不赘述。
+> + 注意CouchBase安装时会设定使用的内存和硬盘容量，视个人电脑配置、项目需求而定。
+> + 由于比较占内存，建议CouchBase服务设为手动启动
 
-> If you import the dependency, the following transitive dependencies are also added:
+Lunix: 
 
-> - core-io: our internal core library, which abstracts lots of Couchbase-specific behavior in a message-oriented way.
-> - RxJava: a foundational library to build powerful reactive and asynchronous applications.
+> + Red Hat/CentOS & Ubuntu/Debian
 
-这里我们有一个简单的sample，大体了解一下怎么使用这个jar包
+Mac OS X:
 
-```java
-    // Spare some details
-    public static void main(String args[]){
-        /**
-         * 1. with no other arguments provide, this will logically bind it to local server
-         * 2. Also you can create a cluster with params, like this
-         * Cluster cluster = CouchbaseCluster.create("127.0.0.1"); // same as no args one
-         * 3. you dont need to put all nodes here, the client is able to establish initial contact by itself.
-         */
-        Cluster cluster = CouchbaseCluster.create();
+> + 土豪，交个朋友吧 
+> ![交个朋友吧](http://2d.zol-img.com.cn/product/87/919/ce45drbn3kUU.png)
 
-        /**
-         * it will connect default bucket without password
-         */
-        Bucket bucket = cluster.openBucket();
+## Management
 
-        try {
-            // 1. prepare data
-            JsonObject user = JsonObject.empty()
-                    .put("firstName", "Edwin")
-                    .put("lastName", "Zhang")
-                    .put("job", "Engineer")
-                    .put("age", 20);
+> + Couchbase Web Console
+> + Command-line Interface (CLI)
+> + REST API
+> + client
 
-            // 2. create JsonDocument
-            JsonDocument doc = JsonDocument.create("Edwin", user);
-            // 3. upsert 
-            JsonDocument response = bucket.upsert(doc);
+## Architecture & Concepts
 
-            System.out.println("=================================================");
-            System.out.println("successfully upsert, response is here:" + response);
-            System.out.println("=================================================");
+Cluster Manager
 
-            // 4. get from couchbase
-            JsonDocument edwin = bucket.get("Edwin");
-            if (edwin == null) {
-                System.out.println("He's quit, Sorry for that.");
-            } else {
-                System.out.println("Found it:" + edwin);
-                System.out.println("You want to know his age? " + edwin.content().getInt("age"));
-                System.out.println("=================================================");
-                System.out.println("Owh! He's older than that, Lets Change it");
-                edwin.content().put("age", 24);
-                // 5. replace
-                response = bucket.replace(edwin); // replace old data
-                System.out.println("Done! See here:" + response);
-            }
+> 可以理解为集群的管理中枢，顾名思义，就是负 责管理集群的生命周期的。
+> 主要负责日志、监控、安全，诸如此类，下面是官方给出的主要功能
+> • Cluster management
+> • Node administration
+> • Node monitoring
+> • Statistics gathering and aggregation
+> • Run-time logging
+> • Multi-tenancy
+> • Security for administrative and client access
+> • Client proxy service to redirect requests
 
-        } catch (Exception e) {
-            // handle the exception here
-            e.printStackTrace();
-        } finally {
-            // 6. close the cluster
-            cluster.disconnect();
-        }
-    }
-```
-上面的例子是一个最简单的demo，总结一下：
+Nodes(or Couchbase Server)
+> 一个CouchBase Server的实例，部署在PC，VM或者云端
+>  Node应该是identical的，提供数据访问读写功能，给外部提供一系列的接口
+> 官网上对于Node与Cluster Manager的关系是这样描述的 
+> `Every node within a Couchbase cluster includes the Cluster Manager component`
 
- 1. 连接cluster，默认连本地
- 2. 打开bukcket，默认连default
- 3. 数据操作
- 4. 关闭数据源
+Cluster
+> 集群简单理解就是一群Node(≥1)
+> 一个cluster中的Nodes对外提供相同的，同时相互间是对等的，没有主从之分
+> 这使得每个Node都可以对整个cluster做管理，分析之类的操作
+> Cluster的Node是可以增加删除的，对等性保证了Cluster内部良好的伸缩性
+> 而用户的数据在每个Node中又是以一个个vBucket存储的
 
-它最大的缺点是它是同步的，这就要求我们的App一定要等到couchbase返回数据我们才能继续后面的操作，这会极大的影响我们的效率。所以改进一下
+vBuckets
+> vBucket可以简单理解为一个数据集，独自占有Node为它开辟的一块空间
+> vBucket更像是一个个集装箱，它的存在使得Node之间数据备份更有效
+> vBucket对用户是不可见的，但是它却是Couchbase中最重要的一个组件
+> vBucket直译为桶，我们的数据为文件的形式保存在这些桶里面
+> Cluster里每个桶都有自己的编号，分布在不同的Node，Couchbase使用Hash算法计算你的数据存储的位置
+> Cluster维护一个全局的 vBucket 与服务器对应表，而不是简单的指向server，[详解](http://zhang.hu/couchbase/)
+> ![vBuckets示意图](http://docs.couchbase.com/admin/admin/images/vbuckets.png)
+> 盗图于[vBuckets官方文档](http://docs.couchbase.com/admin/admin/Concepts/concept-vBucket.html)
 
-```java
-bucket.async()
-    .get("Edwin")
-    .flatMap(new Func1<JsonDocument, Observable<JsonDocument>>() {
-        @Override
-        public Observable<JsonDocument> call(final JsonDocument edwin) {
-            edwin.content().put("age", 24);
-            return bucket.async().replace(edwin);
-        }
-    })
-    .subscribe(new Action1<JsonDocument>() {
-        @Override
-        public void call(final JsonDocument updated) {
-            System.out.println("Updated: " + updated);
-        }
-    });
-``` 
-这里用到了Rxjava的有关知识，请查阅[大头鬼Bruce的这篇博客](http://blog.csdn.net/lzyzsd/article/details/41833541)，写的很详细。如果你使用了java8，你可以让你的代码看起来更简洁一些。
-
-```java
-bucket
-    .async()
-    .get("walter")
-    .flatMap(edwin-> {
-        edwin.content().put("age", 24);
-        return bucket.async().replace(edwin);
-    })
-    .subscribe(updated -> System.out.println("Updated: " + updated));
-```
-
-
-----------
-
-
-### №3. Spring Data Couchbase
-Spring-data-coubase是Spring Data的一个社区项目，目前已更新到release-1.3.2。像其他Spring Data项目一样，它让你更简便的将新的数据库整合到Spring里面。但由于目前项目用的jersey2框架，所以这里只是贴几个链接地址，供大家学习使用。
-
- - [Spring Data Couchbase on Github](https://github.com/spring-projects/spring-data-couchbase)
- - [Latest Documentation](http://docs.spring.io/spring-data/couchbase/docs/current/reference/html/)
- - [Sprng Data](http://projects.spring.io/spring-data/)
-
-----------
+Rack Awareness
+> 翻译为机架感知，主要负责负载均衡，是企业版收费功能
+> 数据备份的管理和单点失效处理
 
 ## Summary
-无论是官方还是社区，couchbase提供给了我们完备的支持，让开发变得简单、高效。
+1. 数据动态分散
+2. 单点失效处理，不会造成数据404
+3. 良好的扩展弹性

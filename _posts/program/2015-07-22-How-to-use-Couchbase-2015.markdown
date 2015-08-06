@@ -1,3 +1,10 @@
+---
+layout: post
+title:  CouchBase的使用02
+categories: 编程
+keywords: CouchBase, 2015
+---
+
 How to use
 ===
 有了前面的概念，我们来了解一下如何使用couchbase，这里我们列举常用的三种方式，仅供参考，具体视项目而定。
@@ -9,7 +16,12 @@ How to use
 
 ----------
 
-### №1. 官方SDK
+### №1. Web Console
+这是Couchbase自带的、最方便、最直观的管理工具。在你安装完成后，它会自动弹出在你的默认浏览器。前文讲到的Couchbase cluster, Nodes, Data Buckets还有Views，这些你都可通过网页进行管理。另外还提供了内存，硬盘的使用情况，支持日志的收集分析，也提供了一些sample的安装，可以很好的帮助你理解couchbase的工作原理。
+
+----------
+
+### №2. 官方SDK
 Couchbase官方网站，针对不通的语言，为我们提供了相应的SDK和文档说明。目前支持C、Go、Java、.NET、Node.js、PHP、Python & Ruby ...
 ![用哪个呢](http://www.divideyvenceras.es/galeria/memes/pensativo-meme.png)
 
@@ -137,9 +149,14 @@ bucket
 ----------
 
 
-### №2. Spring Data Couchbase
+### №3. Spring Data Couchbase
 Spring-data-coubase是Spring Data的一个社区项目，目前已更新到release-1.3.2。像其他Spring Data项目一样，它让你更简便的将新的数据库整合到Spring里面。但由于目前项目用的jersey2框架，所以这里只是贴几个链接地址，供大家学习使用。
 
  - [Spring Data Couchbase on Github](https://github.com/spring-projects/spring-data-couchbase)
  - [Latest Documentation](http://docs.spring.io/spring-data/couchbase/docs/current/reference/html/)
  - [Sprng Data](http://projects.spring.io/spring-data/)
+
+----------
+
+## Summary
+无论是官方还是社区，couchbase提供给了我们完备的支持，让开发变得简单、高效。
