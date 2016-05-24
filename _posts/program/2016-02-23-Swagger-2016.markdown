@@ -26,7 +26,7 @@ In this article we will discuss about how to integrate swagger-core into your Re
 I wrote a small demo to integrate it with my Jersey-Spring Application.
 You can find it [... 404]()
 
-Or try yourself with follow this [spec](https://github.com/swagger-api/swagger-core/wiki/Swagger-Core-JAX-RS-Project-Setup-1.5.X).
+Or try yourself with this [spec](https://github.com/swagger-api/swagger-core/wiki/Swagger-Core-JAX-RS-Project-Setup-1.5.X).
 
 Or ...(I suggest that you should read that. The below sample is just for my app.)
 
@@ -46,6 +46,8 @@ Added maven dependencies
       <artifactId>swagger-jersey-jaxrs</artifactId>
       <version>1.5.0</version>
     </dependency>
+
+> You need change to "swagger-jersey2-jaxrs" if you are using Jersey 2
 
 Initialize swagger beans
 
