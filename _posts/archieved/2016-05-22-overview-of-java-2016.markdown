@@ -87,8 +87,8 @@ keywords: Java, 2016
 ## Chapter 6
 1. 常用工具类
 	- System
-	- Date
-	- Math & Calender
+	- Date & Calender
+	- Math
 2. 字节流
 	- InputStream & OutStream
 3. 文件读取与解析
@@ -102,3 +102,6 @@ keywords: Java, 2016
 3. 网络编程
 4. 反射机制
 5. 正则表达
+
+## Chapter 8
+1. Java各版本新特性
