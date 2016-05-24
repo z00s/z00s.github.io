@@ -20,4 +20,4 @@ the right, we value the items on the left more.
 
 ## Scrum的日子
 
-在乐天GIAPI
+\>\>つづく

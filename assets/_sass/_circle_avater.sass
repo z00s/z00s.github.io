@@ -1,0 +1,121 @@
+// definition of circle avatar
+
+// variables you can change
+$d : 200px
+$r : $d / 2
+/*--------------------------------------------------------------------------------------------------------------------*/
+
+// border define
+=border-radius($radius)
+  -webkit-border-radius: $radius
+  -moz-border-radius:    $radius
+  -ms-border-radius:     $radius
+  border-radius:         $radius
+
+// transitions
+$time : 0.3s
+=transition($time)
+  transition:         all $time ease-out
+  -ms-transition:     all $time ease-out	    /* IE 9 */
+  -webkit-transition: all $time ease-out	    /* Safari and Chrome */
+  -o-transition:      all $time ease-out		/* Opera */
+  -moz-transition:    all $time ease-out
+
+// we should disable use-select
+$none : none
+=user-select($none)
+  user-select:          none
+  -ms-user-select:      none
+  -webkit-user-select:  none
+  -o-user-select:       none
+  -moz-user-select:     none
+
+// custom define
+.circle
+  height: $d
+  width: $d
+  // center
+  position: absolute
+  left: 50%
+  top: 50%
+  margin: -$r
+  // border
+  border: 4px solid rgba(0,0,0,0.4)
+  box-shadow: 0px 0px 10px rgba(255,255,255,0.75)
+  z-index: 12
+  // circle
+  +border-radius(50%)
+  // transition
+  +transition($time)
+
+// text of circle
+.circle-text
+  height: $d
+  line-height: $d
+  font:
+    size: $d * 0.4
+  display: block
+  +user-select($none)
+  color: #ffffff          // text color
+  text-align: center
+
+// when mouse on our circle
+.circle:hover
+  width: $d * 1.1
+  height: $d * 1.1
+  margin: $r * - 1.1
+  padding: 2px
+  box-shadow: 0px 0px 10px rgba(0,0,0,0.4)    // border shadow color
+  border: 4px solid rgba(0,0,0,0.4)
+  animation-duration: 0.3s
+
+.circle:active
+  width: $d
+  height: $d
+  margin: - $r
+  border: 4px solid rgba(0,0,0,0.4)
+  box-shadow: 0px 0px 10px rgba(255,255,255,0.75)
+
+body.open > #avatar
+  position: fixed
+  left: 60px
+  top: 50px
+
+body.open > #avatar label >.circle
+  width: 80px
+  height: 80px
+  margin: - 40px
+
+// transitions
+=cubic-bezier-transition($time)
+  transition:         all $time ease-in-out
+  -ms-transition:     all $time ease-in-out	    /* IE 9 */
+  -webkit-transition: all $time ease-in-out	    /* Safari and Chrome */
+  -o-transition:      all $time ease-in-out		/* Opera */
+  -moz-transition:    all $time ease-in-out
+
+#avatar
+  height: $d
+  width: $d
+  // center
+  position: absolute
+  z-index: 4
+  left: 50%
+  top: 50%
+  margin: -$r
+  // transition
+  +cubic-bezier-transition(.5s)
+
+#avatar
+  position: fixed
+  left: 60px
+  top: 50px
+
+#avatar label >.circle
+  width: 80px
+  height: 80px
+  margin: - 40px
+
+
+
+

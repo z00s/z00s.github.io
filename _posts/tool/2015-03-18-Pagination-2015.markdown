@@ -5,7 +5,7 @@ categories: 工具
 keywords: jekyll,2015
 ---
 
-liquid语言转义高亮bug
+// 这里有liquid语言转义高亮bug，= =b 博主你实在太懒了
 
     <!--分页-->
     <ul class="pagination">
