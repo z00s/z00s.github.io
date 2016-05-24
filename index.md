@@ -5,9 +5,8 @@ title: Welcome
 
 ## 关于博客
 
-github管理博客的好处自不言说，看了很多人的博客留言，大部分认为各大博客网站不能满足他们个(zhuang)性(bi)的需求，自建网站又太过繁琐(lan)
+简单就好
 
-装逼无罪，贵在积累...
 
 ## 博客平台
 
@@ -15,4 +14,4 @@ github管理博客的好处自不言说，看了很多人的博客留言，大�
 
 感谢[suyan](https://github.com/suyan/suyan.github.io)的二次开发，界面很简洁。
 
-我博客的源码托管在[Github](https://github.com/z00s/z00s.github.io)上，如果有任何改进意见，欢迎讨论。
+我博客的源码托管在[Github](https://github.com/z00s/z00s.github.io)。
