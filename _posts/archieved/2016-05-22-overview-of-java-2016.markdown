@@ -55,16 +55,15 @@ keywords: Java, 2016
 	- 接口
 	- Annotation
 	- 内部类
-5. 	设计模式
-6. 	继承与接口实现
+5. 	继承与接口实现
 	- 多态在继承中的体现
-7. 	设计模式
+6. 	设计模式
 
 ## Chapter 4
 1. 异常
 	- 异常分类
 	- 异常处理机制
-	- try cache finally & 资源关闭
+	- try catch finally & 资源关闭
 	- 多态在异常中的体现
 2. 包管理
 3. 多线程
