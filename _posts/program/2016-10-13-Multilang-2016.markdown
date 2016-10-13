@@ -1,0 +1,130 @@
+---
+layout: post
+title:  Cross-boarder - MultiLang 设计
+categories: 编程
+keywords: [MultiLang, 2016]
+---
+
+Cross-boarder - MultiLang 设计
+===
+
+人有母语，程序亦然。 有的人讲普通话，偶尔潜意识还会讲出方言。 会的语言多了，更容易串线乱码，张了口，不知道说的什么。
+
+## Prerequisite
+
+讨论之前，我们先提几个此设计的前提：
+
+- 使用RDBMS，NoSQL的设计我们暂不讨论, 贴两个借鉴
+	+ [Google Forum] 或者 [Stackexchange]
+- 减少Join, 多表关联 
+	+ [知乎:mysql 单表多次查询和多表联合查询，哪个效率高?]
+- UUID作为主键, 发生碰撞的概率小
+	+ [Wikipedia - UUID]
+	
+
+## 抽象 MultiLang
+
+跨境意味着多语言支持，就需要考虑support MultiLang，思考如何存储这些描述信息，并建立关联关系。
+
+为便于理解，我们举一个的例子。
+
+> 一块红布 
+
+这是一首歌的名字，拗口但比较完整的表述应该是（没毛病的人一般不这么说话，这里只是便于抽象。）
+
+> 一块颜色是红色的布
+
+*颜色* 是属性名， *红色* 是属性值，*布* 是实体。
+
+诸如此类的描述性文字用 JSON 表述出来就是
+
+```JSON
+{
+	"item": {
+		"name": {
+			"default": "布",
+			"en_US": "cloth"
+		},
+		"desc": {
+			"default": "一块红布",
+			"en_US": "This is one piece of red cloth."
+		},
+		"attributes": [
+			{
+				"key": {
+					"default": "颜色",
+					"en_US": "Color"
+				},
+				"value": {
+					"default": "红色",
+					"en_US": "RED"
+				}
+			}
+		]
+	}
+}
+```
+
+language code 的标准有很多， 这里用的是[Wikipedia - ISO-3166], 更多标准 => [Wikipedia - Language code]，更直观的看MultiLang 如下
+
+```JSON
+{
+	"default": "颜色",
+	"en_US": "Color",
+	"en_UK" : "Colour"
+}
+```
+
+以上可以作为一个表述单位而存在，具体实现也不难，Java 用 Map，Ruby 用 Hash。
+
+> 如何存入DB呢？
+
+1. 直接存JSON
+2. 拆成多条数据
+
+直接存就不讨论了，实际DB存储多采用拆分，格式如下:
+
+translate_tbl (PK =>  translate_id + languagecode)
+
+``` 
+|| translate_id || language_code || value ||
+
+```
+
+上面的 JSON 存到 DB 就是 3 条记录， default 的 language code 可以自定义。
+
+## 关联 Attribute 和 Value
+
+有了原子表述，下一个问题是 attr 和 value 二者的关联关系存储。 那就需要设计一个关系表
+
+attr_detail_tbl (PK =>  attr_id )
+
+```
+|| attr_id || attr_value_id || 
+```
+
+这样就创建了一个最为简单的关联表，现在我们可以用多过语言表示:
+
+- 颜色 => 红色
+- 型号 => 6s
+- 大小 => 5.2 吋
+
+诸如此类的描述了。 只需要将 attr_id 和 attr_value_id 分别作为 translate_id 存入 translate tbl。
+
+> Notice: 这里使用了UUID作为主键， UUID碰撞的概率是很低的，它保证了此设计的可行性
+
+## 关联 item
+
+接下来，我们的表述就差一步了，由于每一个键值对都有唯一的UUID(attr_id), 所以在不考虑其他需求的情况下（Overwrite和Inherit），我们只要把它"粘"到 item 上就可以了
+
+attr_detail_tbl (PK =>  attr_id, FK: item_id)
+```
+|| attr_id || item_id || attr_value_id ||
+```
+
+[Google Forum]: https://groups.google.com/forum/#!topic/ferris-framework/hNO6HbwIhh4
+[Stackexchange]: http://programmers.stackexchange.com/questions/198602/what-is-a-good-pattern-for-multi-language-in-mongodb
+[知乎:mysql 单表多次查询和多表联合查询，哪个效率高?]: http://www.zhihu.com/question/21657443
+[Wikipedia - ISO-3166]: https://en.wikipedia.org/wiki/ISO_3166
+[Wikipedia - Language code]: https://en.wikipedia.org/wiki/Language_code
+[Wikipedia - UUID]: https://en.wikipedia.org/wiki/Universally_unique_identifier
