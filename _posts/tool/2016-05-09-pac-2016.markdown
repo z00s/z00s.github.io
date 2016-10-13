@@ -1,0 +1,39 @@
+---
+layout: post
+title:  PAC代理简单配置
+categories: 工具
+keywords: pac,2016
+---
+
+> PAC → Proxy auto-config
+
+PAC是通过自定义，使得浏览器在访问网页时自动选择代理服务器的一项技术。
+
+## 自定义
+
+PAC文件其实很简单，它包含一个JavaScript形式的函数
+
+```javascript
+function FindProxyForURL(url, host) {
+	return "DIRECT";
+}
+```
+
+上面的配置相当于没配，它会对所有的url请求使用直接连接的方式处理。
+
+如果你用了http代理或socket代理，你需要更改它的返回值。FindProxyForURL函数支持以下3种返回值:
+
+```
+1. DIRECT
+2. PROXY proxysample.com:8080  或者 PROXY 10.12.8.196:8080
+3. SOCKS5 socks5sample.com:8080  或者SOCKS5 10.12.8.196:8080
+```
+
+而对于url，你可以使用通配符进行匹配，例如：
+
+```
+*.google.com/* 
+```
+
+## 深入配置
+既然是一个javascript文件，你当然可以使用JS的语法进行进一步的配置，比如定义变量，指向动态生成的pac等。但了解基本的配置已经可以满足我们日常需求了
